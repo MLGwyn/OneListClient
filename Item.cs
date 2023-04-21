@@ -12,9 +12,9 @@ namespace OneListClient
         [JsonPropertyName("complete")]
         public bool Complete { get; set; }
         [JsonPropertyName("created_at")]
-        public DateTime Created_at { get; set; }
+        public DateTime CreatedAt { get; set; }
         [JsonPropertyName("updated_at")]
-        public DateTime Updated_at { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public string CompletedStatus
         {
