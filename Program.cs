@@ -9,20 +9,8 @@ namespace OneListClient
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task ShowAllItems(string token)
         {
-            var token = "";
-
-            if (args.Length == 0)
-            {
-                Console.WriteLine("What List would you like? ");
-                token = Console.ReadLine();
-            }
-            else
-            {
-                token = args[0];
-            }
-
             var client = new HttpClient();
 
             var url = $"https://one-list-api.herokuapp.com/items?access_token={token}";
@@ -38,9 +26,48 @@ namespace OneListClient
                 table.AddRow(item.Text, item.CreatedAt, item.CompletedStatus);
             }
             // Write the table
-            table.Write();
-
+            table.Write(Format.Minimal);
         }
 
+        static async Task Main(string[] args)
+        {
+            var token = "";
+
+            if (args.Length == 0)
+            {
+                Console.WriteLine("What List would you like? ");
+                token = Console.ReadLine();
+            }
+            else
+            {
+                token = args[0];
+            }
+
+            var keepGoing = true;
+            while (keepGoing)
+            {
+                Console.Clear();
+                Console.WriteLine("Get (A)ll todo, or (Q)uit: ");
+                var choice = Console.ReadLine().ToUpper();
+
+                switch (choice)
+                {
+                    case "Q":
+                        keepGoing = false;
+                        break;
+
+                    case "A":
+                        await ShowAllItems(token);
+
+                        Console.WriteLine("Press ENTER to continue");
+                        Console.ReadLine();
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+        }
     }
 }
